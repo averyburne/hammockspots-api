@@ -29,7 +29,7 @@ const router = express.Router()
 
 // INDEX
 // GET /listItem
-router.get('/hammockSpots', (req, res, next) => {
+router.get('/hammockSpots', requireToken, (req, res, next) => {
     hammockSpot => {
       // `listItem` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
@@ -44,7 +44,7 @@ router.get('/hammockSpots', (req, res, next) => {
 
 // SHOW
 // GET /listItem/5a7db6c74d55bc51bdf39793
-router.get('/hammockSpots/:id', (req, res, next) => {
+router.get('/hammockSpots/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   HammockSpot.findById(req.params.id)
     .then(handle404)
@@ -56,7 +56,7 @@ router.get('/hammockSpots/:id', (req, res, next) => {
 
 // CREATE
 // POST /listItem
-router.post('/hammockSpot', (req, res, next) => {
+router.post('/hammockSpot', requireToken, (req, res, next) => {
   // set owner of new listItem to be current user
   // req.body.listItem.owner = req.user.id
 
@@ -73,7 +73,7 @@ router.post('/hammockSpot', (req, res, next) => {
 
 // UPDATE
 // PATCH /listItem/5a7db6c74d55bc51bdf39793
-router.patch('/hammockSpots/:id', removeBlanks, (req, res, next) => {
+router.patch('/hammockSpots/:id', removeBlanks, requireToken, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   // delete req.body.listItem.owner
@@ -96,7 +96,7 @@ router.patch('/hammockSpots/:id', removeBlanks, (req, res, next) => {
 
 // DESTROY
 // DELETE /listItem/5a7db6c74d55bc51bdf39793
-router.delete('/hammockSpots/:id', (req, res, next) => {
+router.delete('/hammockSpots/:id', requireToken, (req, res, next) => {
   HammockSpot.findById(req.params.id)
     .then(handle404)
     .then(hammockSpot => {
