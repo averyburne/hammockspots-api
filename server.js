@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 // require route files
-const userRoutes = require('./app/routes/user_routes')
 const hammockSpotRoutes = require('./app/routes/hammockSpot_routes')
+const userRoutes = require('./app/routes/user_routes')
 
 // require middleware
 const errorHandler = require('./lib/error_handler')

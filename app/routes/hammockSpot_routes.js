@@ -29,15 +29,16 @@ const router = express.Router()
 
 // INDEX
 // GET /listItem
-router.get('/hammockSpots', requireToken, (req, res, next) => {
-    hammockSpot => {
+router.get('/hammockSpots', (req, res, next) => {
+  HammockSpot.find()
+    .then(hammockSpot => {
       // `listItem` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
       return hammockSpot.map(hammockSpot => hammockSpot.toObject())
-    }
+    })
     // respond with status 200 and JSON of the listItem
-    hammockSpot => res.status(200).json({ hammockSpot: hammockSpot })
+    .then(hammockSpot => res.status(200).json({ hammockSpot: hammockSpot }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
